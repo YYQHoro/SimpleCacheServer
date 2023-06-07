@@ -40,6 +40,16 @@ def clear_dict():
     return make_response(jsonify(dict_pool))
 
 
+@app.route('/delete/dict/<keyname>', methods=['POST'])
+def delete_dict(keyname):
+    if not keyname:
+        return flask.Response(status=400)
+    if keyname not in dict_pool:
+        return flask.Response(status=404)
+    del dict_pool[keyname]
+    return flask.Response(status=200)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", default='127.0.0.1', type=str, help='the server listening host')
